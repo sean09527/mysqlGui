@@ -211,10 +211,6 @@ This project is licensed under the MIT License - see the LICENSE file for detail
 - Icons from [Heroicons](https://heroicons.com/)
 
 ---
-
-Made with ❤️ by the MySQL Manager team
-
----
 ## Support the Project
 
 If you find this project helpful, consider supporting its development:
