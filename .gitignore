@@ -1,0 +1,8 @@
+build/bin
+node_modules
+frontend/dist
+
+# Wails 生成的绑定文件会在运行时自动生成
+# 但我们保留临时占位文件以避免开发时的 TypeScript 错误
+# frontend/wailsjs/go/backend/App.js
+# frontend/wailsjs/go/backend/App.d.ts
