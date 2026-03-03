@@ -27,11 +27,9 @@ A modern, cross-platform MySQL/MariaDB database management tool built with Wails
 go install github.com/wailsapp/wails/v2/cmd/wails@latest
 
 # Clone the repository
-git clone https://github.com/yourusername/mysql-manager.git
-cd mysql-manager
+git clone https://github.com/sean09527/mysqlGui.git
+cd mysqlGui
 
-# Install dependencies
-make install-deps
 ```
 
 ### Development
