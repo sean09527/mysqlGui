@@ -213,3 +213,15 @@ This project is licensed under the MIT License - see the LICENSE file for detail
 ---
 
 Made with ❤️ by the MySQL Manager team
+
+---
+## Support the Project
+
+If you find this project helpful, consider supporting its development:
+
+<div align="center">
+  <img src="donation-qr.jpg" width="200">
+  <p><em>Scan to support development</em></p>
+</div>
+
+Your support helps maintain and improve MySQL Manager. Thank you! 🙏
