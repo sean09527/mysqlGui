@@ -1,0 +1,47 @@
+{
+  "$schema": "https://wails.io/schemas/config.v2.json",
+  "name": "mysql-manager",
+  "outputfilename": "MySQL-Manager",
+  "frontend:install": "npm install",
+  "frontend:build": "npm run build",
+  "frontend:dev:watcher": "npm run dev",
+  "frontend:dev:serverUrl": "auto",
+  "author": {
+    "name": "renlongfei",
+    "email": "rlf@gmail.com"
+  },
+  "info": {
+    "companyName": "MySQL Manager",
+    "productName": "MySQL Manager",
+    "productVersion": "1.0.0",
+    "copyright": "Copyright © 2024",
+    "comments": "A modern MySQL/MariaDB database management tool"
+  },
+  "nsisType": "multiple",
+  "obfuscated": false,
+  "debianPackage": {
+    "packageName": "mysql-manager",
+    "packageDescription": "A modern MySQL/MariaDB database management tool",
+    "packageVersion": "1.0.0",
+    "maintainer": "renlongfei <rlf@gmail.com>",
+    "homepage": "https://github.com/yourusername/mysql-manager"
+  },
+  "linux": {
+    "icon": "build/appicon.png",
+    "outputName": "mysql-manager"
+  },
+  "windows": {
+    "icon": "build/windows/icon.ico",
+    "outputName": "MySQL-Manager.exe",
+    "wailsjs": {
+      "generateJS": true,
+      "generateTS": true
+    }
+  },
+  "darwin": {
+    "icon": "build/darwin/icon.icns",
+    "outputName": "MySQL Manager",
+    "bundleId": "com.mysqlmanager.app",
+    "minimumSystemVersion": "10.13.0"
+  }
+}
