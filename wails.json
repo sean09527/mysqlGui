@@ -25,23 +25,5 @@
     "packageVersion": "1.0.0",
     "maintainer": "renlongfei <rlf@gmail.com>",
     "homepage": "https://github.com/yourusername/mysql-manager"
-  },
-  "linux": {
-    "icon": "build/appicon.png",
-    "outputName": "mysql-manager"
-  },
-  "windows": {
-    "icon": "build/windows/icon.ico",
-    "outputName": "MySQL-Manager.exe",
-    "wailsjs": {
-      "generateJS": true,
-      "generateTS": true
-    }
-  },
-  "darwin": {
-    "icon": "build/darwin/icon.icns",
-    "outputName": "MySQL Manager",
-    "bundleId": "com.mysqlmanager.app",
-    "minimumSystemVersion": "10.13.0"
   }
 }

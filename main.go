@@ -2,16 +2,28 @@ package main
 
 import (
 	"embed"
+	"fmt"
+	"time"
 
 	"mygui/backend"
 
 	"github.com/wailsapp/wails/v2"
 	"github.com/wailsapp/wails/v2/pkg/options"
 	"github.com/wailsapp/wails/v2/pkg/options/assetserver"
+	"github.com/wailsapp/wails/v2/pkg/options/linux"
+	"github.com/wailsapp/wails/v2/pkg/options/mac"
+	"github.com/wailsapp/wails/v2/pkg/options/windows"
 )
 
 //go:embed all:frontend/dist
 var assets embed.FS
+
+//go:embed build/appicon.png
+var icon []byte
+
+var version = "0.0.0"
+
+const appName = "MySQL"
 
 func main() {
 	// Create an instance of the app structure
@@ -30,6 +42,27 @@ func main() {
 		OnShutdown:       app.Shutdown,
 		Bind: []interface{}{
 			app,
+		},
+		Mac: &mac.Options{
+			TitleBar: mac.TitleBarHiddenInset(),
+			About: &mac.AboutInfo{
+				Title:   fmt.Sprintf("%s %s", appName, version),
+				Message: "A modern lightweight cross-platform Redis desktop client.\n\nCopyright © " + time.Now().Format("2006"),
+				Icon:    icon,
+			},
+			WebviewIsTransparent: false,
+			WindowIsTranslucent:  false,
+		},
+		Windows: &windows.Options{
+			WebviewIsTransparent:              false,
+			WindowIsTranslucent:               false,
+			DisableFramelessWindowDecorations: false,
+		},
+		Linux: &linux.Options{
+			ProgramName:         appName,
+			Icon:                icon,
+			WebviewGpuPolicy:    linux.WebviewGpuPolicyOnDemand,
+			WindowIsTranslucent: true,
 		},
 	})
 
