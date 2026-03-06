@@ -11,8 +11,16 @@
 
     <!-- 右侧内容区域 -->
     <div class="workspace-content">
+      <!-- 数据表列表（当选中数据库但未选中表时显示） -->
+      <div v-if="contentType === 'table-list'" class="table-list-panel">
+        <TableList
+          @view-schema="handleViewSchema"
+          @view-data="handleViewData"
+        />
+      </div>
+
       <!-- 欢迎页面 -->
-      <div v-if="contentType === 'welcome'" class="welcome-content">
+      <div v-else-if="contentType === 'welcome'" class="welcome-content">
         <el-empty description="请从左侧选择数据库和表">
           <template #image>
             <el-icon :size="100" color="#909399">
@@ -22,6 +30,7 @@
           <div class="welcome-tips">
             <p><strong>提示：</strong></p>
             <ul>
+              <li>单击数据库名自动展开表列表</li>
               <li>双击表名查看表数据</li>
               <li>右键点击表名选择"修改表结构"</li>
               <li>右键点击表名选择"查看表结构"</li>
@@ -139,6 +148,7 @@ import DatabaseExplorer from '../components/DatabaseExplorer.vue';
 import SchemaViewer from '../components/SchemaViewer.vue';
 import TableEditor from '../components/TableEditor.vue';
 import DataManager from '../components/DataManager.vue';
+import TableList from '../components/TableList.vue';
 import {
   FolderOpened,
   Document,
@@ -154,7 +164,7 @@ const currentConnection = computed(() => connectionStore.currentConnection);
 const currentDatabase = computed(() => databaseStore.currentDatabase);
 const currentTable = computed(() => databaseStore.currentTable);
 
-// 内容类型: 'welcome' | 'schema-view' | 'schema-edit' | 'data'
+// 内容类型: 'welcome' | 'table-list' | 'schema-view' | 'schema-edit' | 'data'
 const contentType = ref<string>('welcome');
 
 // 处理查看表结构
@@ -181,7 +191,12 @@ const handleViewData = () => {
 
 // 处理关闭
 const handleClose = () => {
-  contentType.value = 'welcome';
+  // 关闭后显示表列表（如果有选中的数据库）
+  if (currentDatabase.value) {
+    contentType.value = 'table-list';
+  } else {
+    contentType.value = 'welcome';
+  }
   databaseStore.setCurrentTable(null);
 };
 
@@ -191,9 +206,22 @@ const handleSchemaUpdateSuccess = () => {
   contentType.value = 'schema-view';
 };
 
+// 监听当前数据库变化
+watch(currentDatabase, (newDb) => {
+  if (newDb && !currentTable.value) {
+    // 选中数据库但没有选中表时，显示表列表
+    contentType.value = 'table-list';
+  } else if (!newDb) {
+    contentType.value = 'welcome';
+  }
+});
+
 // 监听当前表变化
 watch(currentTable, (newTable) => {
-  if (!newTable) {
+  if (!newTable && currentDatabase.value) {
+    // 取消选中表时，显示表列表
+    contentType.value = 'table-list';
+  } else if (!newTable && !currentDatabase.value) {
     contentType.value = 'welcome';
   }
 });
@@ -230,6 +258,14 @@ watch(currentTable, (newTable) => {
   background-color: #fff;
   margin: 16px;
   border-radius: 4px;
+}
+
+.table-list-panel {
+  height: 100%;
+  background-color: #fff;
+  margin: 16px;
+  border-radius: 4px;
+  overflow: hidden;
 }
 
 .welcome-tips {

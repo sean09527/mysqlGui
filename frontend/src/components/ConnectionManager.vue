@@ -92,14 +92,16 @@
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted } from 'vue';
+import { ref, computed, watch, onMounted } from 'vue';
 import { ElMessage, ElMessageBox } from 'element-plus';
 import { Plus } from '@element-plus/icons-vue';
+import { useRouter } from 'vue-router';
 import { useConnectionStore } from '../stores/connection';
 import { ConnectionAPI } from '../api';
 import ConnectionForm from './ConnectionForm.vue';
 import type { ConnectionProfile } from '../types/api';
 
+const router = useRouter();
 const connectionStore = useConnectionStore();
 const loading = ref(false);
 const formVisible = ref(false);
@@ -145,6 +147,11 @@ const handleConnect = async (profile: ConnectionProfile) => {
     await ConnectionAPI.connect(profile.id);
     connectionStore.setCurrentConnection(profile);
     ElMessage.success(`已连接到 ${profile.name}`);
+    
+    // 连接成功后跳转到工作台
+    setTimeout(() => {
+      router.push('/workspace');
+    }, 500);
   } catch (error: any) {
     ElMessage.error(`连接失败: ${error.message || error}`);
   } finally {

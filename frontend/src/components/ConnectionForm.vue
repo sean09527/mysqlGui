@@ -417,11 +417,6 @@ const handleTestConnection = async () => {
         : '连接测试成功！',
       duration: 3000,
     });
-
-    // 测试连接成功后自动跳转到工作区
-    setTimeout(() => {
-      router.push('/workspace');
-    }, 500);
   } catch (error: any) {
     if (error !== false) {
       // 区分 SSH 连接失败和数据库连接失败

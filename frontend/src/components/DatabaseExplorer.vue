@@ -289,7 +289,7 @@ const loadNode = async (node: any, resolve: (data: any[]) => void) => {
 };
 
 // 处理节点点击
-const handleNodeClick = async (data: any) => {
+const handleNodeClick = async (data: any, node: any) => {
   const now = Date.now();
   const isDoubleClick = lastClickNode.value === data.id && (now - lastClickTime.value) < 300;
   
@@ -297,9 +297,14 @@ const handleNodeClick = async (data: any) => {
   lastClickNode.value = data.id;
   
   if (data.type === 'database') {
-    // 点击数据库节点
+    // 点击数据库节点 - 自动展开
     databaseStore.setCurrentDatabase(data.database);
     databaseStore.setCurrentTable(null);
+    
+    // 自动展开数据库节点
+    if (!node.expanded) {
+      node.expanded = true;
+    }
   } else if (data.type === 'table') {
     // 单击表节点 - 只选中，不打开
     databaseStore.setCurrentDatabase(data.database);
